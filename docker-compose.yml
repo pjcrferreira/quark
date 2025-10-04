@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    container_name: quark-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: quarkdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+# docker-compose.yml
+
+# version: '3.8'
+# 
+# services:
+#   # Your backend application service
+#   app:
+#     build: . # Tells Docker to build the image from the Dockerfile in the current directory
+#     ports:
+#       - "3000:3000" # Maps your local port 3000 to the container's port 3000
+#     environment:
+#       # Use the service name 'db' as the host
+#       - DATABASE_URL=postgresql://myuser:mypassword@db:5432/mydatabase
+#     depends_on:
+#       - db # Tells this service to wait until the 'db' service is started
+# 
+#   # The PostgreSQL database service
+#   db:
+#     image: postgres:15 # Use the official PostgreSQL image from Docker Hub
+#     restart: always
+#     environment:
+#       - POSTGRES_USER=myuser
+#       - POSTGRES_PASSWORD=mypassword
+#       - POSTGRES_DB=mydatabase
+#     ports:
+#       - "5432:5432" # Maps your local port 5432 to the container's port 5432
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data # Persists database data
+# 
+# # Defines a named volume to persist data even if the container is removed
+# volumes:
+#   postgres_data:
+# 
