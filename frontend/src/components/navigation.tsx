@@ -1,26 +1,16 @@
 import { Button } from "./ui/button";
-import { 
-  Home, 
-  CreditCard, 
-  TrendingUp, 
-  Receipt, 
-  Send, 
-  Target,
-  User
-} from "lucide-react";
+import { Home, CreditCard, TrendingUp, Receipt, Send } from "lucide-react";
+import { useLocation, useNavigate } from 'react-router-dom';
 
-interface NavigationProps {
-  activeSection: string;
-  onSectionChange: (section: string) => void;
-}
-
-export function Navigation({ activeSection, onSectionChange }: NavigationProps) {
+export function Navigation() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const sections = [
-    { id: 'dashboard', label: 'Carteira', icon: Home },
-    { id: 'transfer', label: 'PIX', icon: Send },
-    { id: 'transactions', label: 'Extrato', icon: Receipt },
-    { id: 'credit', label: 'Crédito', icon: CreditCard },
-    { id: 'investment', label: 'Investir', icon: TrendingUp },
+    { id: '/dashboard', label: 'Carteira', icon: Home },
+    { id: '/transfer', label: 'PIX', icon: Send },
+    { id: '/transactions', label: 'Extrato', icon: Receipt },
+    { id: '/credit', label: 'Crédito', icon: CreditCard },
+    { id: '/investment', label: 'Investir', icon: TrendingUp },
   ];
 
   return (
@@ -28,8 +18,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
       <div className="flex justify-around items-center max-w-md mx-auto">
         {sections.map((section) => {
           const Icon = section.icon;
-          const isActive = activeSection === section.id;
-          
+          const isActive = location.pathname === section.id;
           return (
             <Button
               key={section.id}
@@ -40,7 +29,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
                   ? 'text-[#4E5283]' 
                   : 'text-gray-600 hover:text-[#4E5283]'
               }`}
-              onClick={() => onSectionChange(section.id)}
+              onClick={() => navigate(section.id)}
             >
               <Icon size={20} />
               <span className="text-xs">{section.label}</span>

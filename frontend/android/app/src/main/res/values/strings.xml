@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">QuarkApp</string>
+    <string name="title_activity_main">QuarkApp</string>
+    <string name="package_name">com.quark.app</string>
+    <string name="custom_url_scheme">com.quark.app</string>
+</resources>
